@@ -90,15 +90,6 @@ export default function UserRoutes(app) {
     const user = await dao.createUser(req.body);
     res.json(user);
   };
-  app.post("/api/users", createUser);
-  app.get("/api/users/:userId", findUserById);
-  app.get("/api/users", findAllUsers);
-  app.put("/api/users/:userId", updateUser);
-  app.post("/api/users/signup", signup);
-  app.post("/api/users/signin", signin);
-  app.post("/api/users/signout", signout);
-  app.post("/api/users/profile", profile);
-
   const createCourse = (req, res) => {
     const currentUser = req.session["currentUser"];
     if (!currentUser) {
@@ -109,8 +100,6 @@ export default function UserRoutes(app) {
     enrollmentsDao.createEnrollment(currentUser._id, newCourse._id);
     res.json(newCourse);
   };
-  app.post("/api/users/current/courses", createCourse);
-
   const createEnrollment = (req, res) => {
     const currentUser = req.session["currentUser"];
     if (!currentUser) {
@@ -121,7 +110,6 @@ export default function UserRoutes(app) {
     enrollmentsDao.createEnrollment(currentUser._id, courseId);
     res.json({ user: currentUser, course: courseId });
   };
-  app.post("/api/users/current/enrollments", createEnrollment);
 
   const deleteEnrollment = (req, res) => {
     const currentUser = req.session["currentUser"];
@@ -135,8 +123,6 @@ export default function UserRoutes(app) {
     const status = enrollmentsDao.deleteEnrollment(currentUser._id, courseId);
     res.send(status);
   };
-  app.delete("/api/users/current/enrollments/:cid", deleteEnrollment);
-
   const enrollUserInCourse = async (req, res) => {
     let { uid, cid } = req.params;
     if (uid === "current") {
@@ -155,12 +141,23 @@ export default function UserRoutes(app) {
     const status = await enrollmentsDao.unenrollUserFromCourse(uid, cid);
     res.send(status);
   };
-  app.post("/api/users/:uid/courses/:cid", enrollUserInCourse);
-  app.delete("/api/users/:uid/courses/:cid", unenrollUserFromCourse);
 
   const deleteUser = async (req, res) => {
     const status = await dao.deleteUser(req.params.userId);
     res.json(status);
   };
+  app.post("/api/users", createUser);
+  app.get("/api/users/:userId", findUserById);
+  app.get("/api/users", findAllUsers);
+  app.put("/api/users/:userId", updateUser);
   app.delete("/api/users/:userId", deleteUser);
+  app.post("/api/users/signup", signup);
+  app.post("/api/users/signin", signin);
+  app.post("/api/users/signout", signout);
+  app.post("/api/users/profile", profile);
+  app.post("/api/users/current/courses", createCourse);
+  app.post("/api/users/current/enrollments", createEnrollment);
+  app.delete("/api/users/current/enrollments/:cid", deleteEnrollment);
+  app.post("/api/users/:uid/courses/:cid", enrollUserInCourse);
+  app.delete("/api/users/:uid/courses/:cid", unenrollUserFromCourse);
 }
