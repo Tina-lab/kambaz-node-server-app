@@ -12,10 +12,10 @@ export default function ModuleRoutes(app) {
     res.send(status);
   });
 
-  app.put("/api/modules/:moduleId", (req, res) => {
+  app.put("/api/modules/:moduleId", async (req, res) => {
     const { moduleId } = req.params;
     const moduleUpdates = req.body;
-    const status = modulesDao.updateModule(moduleId, moduleUpdates);
+    const status = await modulesDao.updateModule(moduleId, moduleUpdates);
     res.send(status);
   });
   app.post("/api/courses/:courseId/modules", async (req, res) => {
