@@ -13,3 +13,6 @@ export function enrollUserInCourse(user, course) {
 export function unenrollUserFromCourse(user, course) {
   return model.deleteOne({ user, course });
 }
+const deleteEnrollmentsByCourse = async (courseId) => {
+  return await enrollmentModel.deleteMany({ course: courseId });
+};
