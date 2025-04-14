@@ -18,7 +18,7 @@ export function unenrollUserFromCourse(user, course) {
   return model.deleteOne({ user, course });
 }
 export const deleteEnrollmentsByCourse = async (courseId) => {
-  return await enrollmentModel.deleteMany({ course: courseId });
+  return await model.deleteMany({ course: courseId });
 };
 export const deleteEnrollmentsByUser = async (userId) =>
-  await enrollmentModel.deleteMany({ user: userId });
+  await model.deleteMany({ user: userId });

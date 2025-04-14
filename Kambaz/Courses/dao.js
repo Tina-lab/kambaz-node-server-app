@@ -4,7 +4,7 @@ export function findAllCourses() {
   return model.find();
 }
 export function createCourse(course) {
-  return model.create(newCourse);
+  return model.create(course);
 }
 export function updateCourse(courseId, courseUpdates) {
   return model.updateOne({ _id: courseId }, { $set: courseUpdates });
