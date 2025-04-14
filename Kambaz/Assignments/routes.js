@@ -5,10 +5,10 @@ export default function AssignmentRoutes(app) {
     const status = assignmentsDao.deleteAssignment(aId);
     res.send(status);
   });
-  app.put("/api/assignments/:aId", (req, res) => {
+  app.put("/api/assignments/:aId", async (req, res) => {
     const { aId } = req.params;
     const aUpdates = req.body;
-    const status = assignmentsDao.updateAssignment(aId, aUpdates);
+    const status = await assignmentsDao.updateAssignment(aId, aUpdates);
     res.send(status);
   });
 }
